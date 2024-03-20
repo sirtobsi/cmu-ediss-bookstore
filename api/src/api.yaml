@@ -1,0 +1,269 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Lendit Server
+  description: API for lendit backend.
+servers:
+  - url: "{baseURL}" # for local testing
+    variables:
+      baseURL:
+        default: "http://localhost:8080"
+        description: Base URL of the server
+    description: Local server
+tags:
+  - name: default
+    description: some testing stuff
+  - name: books
+    description: all book related operations
+  - name: customers
+    description: all customer related operations
+paths:
+  /:
+    get:
+      tags:
+        - default
+      summary: Get Hello World!
+      description: Get Hello World!
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelloWorldResponseDto"
+  /books:
+    post:
+      tags:
+        - books
+      summary: Add a new book
+      description: Add a new book to the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookDto"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookDto"
+        "422":
+          description: ISBN already exists
+        "400":
+          description: Illegal, missing, or malformed input
+  
+  /books/{ISBN}:
+    get:
+      tags:
+        - books
+      summary: Get a book by id
+      description: Get a book by id
+      parameters:
+        - name: ISBN
+          in: path
+          required: true
+          description: ISBN of the book to get
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookDto"
+        "404":
+          description: ISBN not found
+    put:
+      tags:
+        - books
+      summary: Update a book by id
+      description: Update a book by id
+      parameters:
+        - name: ISBN
+          in: path
+          required: true
+          description: ISBN of the book to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookDto"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookDto"
+        "400":
+          description: Illegal, missing, or malformed input
+        "404":
+          description: ISBN not found
+
+  /customers:
+    post:
+      tags:
+        - customers
+      summary: Add a new customer
+      description: Add a new customer to the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewCustomerDto"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+        "422":
+          description: User ID already exists
+        "400":
+          description: Illegal, missing, or malformed input
+    get:
+      tags:
+        - customers
+      summary: Get customer by userId
+      description: Get customer customers
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          description: userId of the customer to get
+          example: "Peter.Quill@gmail.com"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+        "400":
+          description: Illegal, missing, or malformed input
+        "404":
+          description: User ID not found
+
+  /customers/{id}:
+    get:
+      tags:
+        - customers
+      summary: Get a customer by id
+      description: Get a customer by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the customer to get
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+        "404":
+          description: ID not found
+  
+components:
+  schemas:
+    HelloWorldResponseDto:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: Hello World!
+      required:
+        - msg
+    BookDto:
+      type: object
+      properties:
+        ISBN:
+          type: string
+          example: "978-3-16-148410-0"
+        title:
+          type: string
+          example: "The Hobbit"
+        Author:
+          type: string
+          example: "J.R.R. Tolkien"
+        description:
+          type: string
+          example: "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold."
+        genre:
+          type: string
+          example: "fantasy"
+        price:
+          type: number
+          example: 10.99
+        quantity:
+          type: integer
+          example: 5
+      required:
+        - ISBN
+        - title
+        - Author
+        - description
+        - genre
+        - price
+        - quantity
+    NewCustomerDto:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "Peter.Quill@gmail.com"
+        name:
+          type: string
+          example: "Peter Quill"
+        phone:
+          type: string
+          example: "+165445323"
+        address:
+          type: string
+          example: "1234 Galaxy Way"
+        address2:
+          type: string
+          example: "Apt 123"
+        city:
+          type: string
+          example: "Knowhere"
+        state:
+          type: string
+          example: "KY"
+        zipcode:
+          type: string
+          example: "40506"
+      required:
+        - userId
+        - name
+        - phone
+        - address
+        - city
+        - state
+        - zipcode
+    CustomerDto:
+      allOf:
+      - $ref: "#/components/schemas/NewCustomerDto"
+      - type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+        required:
+        - id
+
+
