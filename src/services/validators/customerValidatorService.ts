@@ -3,10 +3,20 @@ import { ApiError, ApiErrorCodes } from 'src/middleware/errorhandler/APIError'
 import { z } from 'zod'
 
 /**
+ * This is a zod schema for the customer id used to validate the object.
+ */
+const customerIdValidator = z.number().int().positive()
+
+/**
+ * This ia a zod schema for the userId used to validate the object.
+ */
+const userIdValidator = z.string().email()
+
+/**
  * This is a zod schema for the newCustomer object used to validate the object.
  */
 const newCustomerValidator = z.object({
-  userId: z.string().email(),
+  userId: userIdValidator,
   name: z.string(),
   phone: z.string(),
   address: z.string(),
@@ -74,18 +84,8 @@ const newCustomerValidator = z.object({
  * This is a zod schema for the customer object used to validate the object.
  */
 const customerValidator = newCustomerValidator.extend({
-  id: z.number().int().positive(),
+  id: customerIdValidator,
 })
-
-/**
- * This is a zod schema for the customer id used to validate the object.
- */
-const customerIdValidator = z.number().int().positive()
-
-/**
- * This ia a zod schema for the userId used to validate the object.
- */
-const userIdValidator = z.string().email()
 
 /**
  * Validates a new customer dto object.

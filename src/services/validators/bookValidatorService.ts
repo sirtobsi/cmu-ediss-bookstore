@@ -3,10 +3,15 @@ import { ApiError, ApiErrorCodes } from 'src/middleware/errorhandler/APIError'
 import { z } from 'zod'
 
 /**
+ * This is a zod schema for the ISBN used to validate the object.
+ */
+const ISBNValidator = z.string()
+
+/**
  * This is a zod schema for the book object used to validate the object.
  */
 const bookValidator = z.object({
-  ISBN: z.string(),
+  ISBN: ISBNValidator,
   title: z.string(),
   Author: z.string(),
   description: z.string(),
@@ -25,11 +30,6 @@ const bookValidator = z.object({
     ),
   quantity: z.number().positive().int({ message: 'Quantity must be an integer' }),
 })
-
-/**
- * This is a zod schema for the ISBN used to validate the object.
- */
-const ISBNValidator = z.string()
 
 /**
  * Validates a book dto object.
