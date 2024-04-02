@@ -7,7 +7,9 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { BookDto } from './models/BookDto';
+export type { BookMobileBFFDto } from './models/BookMobileBFFDto';
 export type { CustomerDto } from './models/CustomerDto';
+export type { CustomerWebBFFDto } from './models/CustomerWebBFFDto';
 export type { HelloWorldResponseDto } from './models/HelloWorldResponseDto';
 export type { NewCustomerDto } from './models/NewCustomerDto';
 

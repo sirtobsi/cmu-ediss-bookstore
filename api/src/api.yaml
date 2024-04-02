@@ -265,5 +265,61 @@ components:
             example: 1
         required:
         - id
+    CustomerWebBFFDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        userId:
+          type: string
+          example: "Peter.Quill@gmail.com"
+        name:
+          type: string
+          example: "Peter Quill"
+        phone:
+          type: string
+          example: "+165445323"
+      required:
+        - id
+        - userId
+        - name
+        - phone
+    BookMobileBFFDto:
+      type: object
+      properties:
+        ISBN:
+          type: string
+          example: "978-3-16-148410-0"
+        title:
+          type: string
+          example: "The Hobbit"
+        Author:
+          type: string
+          example: "J.R.R. Tolkien"
+        description:
+          type: string
+          example: "The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold."
+        genre:
+          oneOf:
+          - type: integer
+            example: 3
+          - type: string
+            example: "fantasy"
+        price:
+          type: number
+          example: 10.99
+        quantity:
+          type: integer
+          example: 5
+      required:
+        - ISBN
+        - title
+        - Author
+        - description
+        - genre
+        - price
+        - quantity
+        
 
 
