@@ -27,7 +27,12 @@
       "import/no-extraneous-dependencies": [
         "error",
         {
-          "devDependencies": ["src/test/**"]
+          "devDependencies": [
+            "BookService/src/test/**",
+            "CustomerService/src/test/**",
+            "WebBFF/src/test/**",
+            "MobileBFF/src/test/**"
+          ]
         }
       ]
     }

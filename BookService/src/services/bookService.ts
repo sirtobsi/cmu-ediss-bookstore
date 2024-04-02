@@ -5,7 +5,7 @@
 import { BookDto } from '@api/generated'
 import { BookDao } from '@prisma/client'
 import { convertBookDtoToDao } from './converters/bookConverterService'
-import { ApiError, ApiErrorCodes } from 'src/middleware/errorhandler/APIError'
+import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
 import { prisma } from 'src/server'
 
 /**

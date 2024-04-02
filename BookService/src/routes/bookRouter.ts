@@ -4,7 +4,7 @@ import {
   postBooks,
   putBookByISBN,
 } from 'src/constrollers/bookController'
-import asyncWrapper from 'src/middleware/errorhandler/asyncWrapper'
+import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 
 /**
  * The router for the book resource.

@@ -4,7 +4,7 @@ import {
   getCustomersById,
   postCustomers,
 } from 'src/constrollers/customerController'
-import asyncWrapper from 'src/middleware/errorhandler/asyncWrapper'
+import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 
 /**
  * The router for the customer resource.

@@ -11,7 +11,7 @@ import {
   findCustomerByUserId,
 } from 'src/services/customerService'
 import { convertCustomerDaoToDto } from 'src/services/converters/customerConverterService'
-import { validateCustomerDto, validateCustomerId, validateNewCustomerDto, validateUserId } from 'src/services/validators/customerValidatorService'
+import { validateCustomerId, validateNewCustomerDto, validateUserId } from 'src/services/validators/customerValidatorService'
 
 /**
  * Add a new customer.

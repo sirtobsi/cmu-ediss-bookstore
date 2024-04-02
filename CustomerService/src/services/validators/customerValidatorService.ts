@@ -1,5 +1,5 @@
 import { CustomerDto, NewCustomerDto } from '@api/generated'
-import { ApiError, ApiErrorCodes } from 'src/middleware/errorhandler/APIError'
+import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
 import { z } from 'zod'
 
 /**
