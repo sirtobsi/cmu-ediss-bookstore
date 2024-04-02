@@ -9,11 +9,14 @@ import { convertBook } from '../converters/bookConverter'
 export const bookProxy = proxy(env.BASEURL!, {
   userResDecorator: function (
     proxyRes,
-    proxyResData: BookDto,
+    proxyResData,
     userReq,
     userRes,
   ) {
-    const mobileBffBook: BookMobileBFFDto = convertBook(proxyResData)
+    const mobileBffBook: BookMobileBFFDto = convertBook(proxyResData as BookDto)
     return JSON.stringify(mobileBffBook)
+  },
+  proxyReqPathResolver: function (req) {
+    return '/books' + req.url
   },
 })

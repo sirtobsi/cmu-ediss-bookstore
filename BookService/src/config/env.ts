@@ -4,7 +4,7 @@ import { load } from 'ts-dotenv'
  * Environment variables
  */
 export default load({
-  PORT: {
+  SERVICEPORT: {
     type: String,
     optional: false,
   },

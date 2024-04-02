@@ -3,7 +3,7 @@ import {
   getBookByISBN,
   postBooks,
   putBookByISBN,
-} from 'src/constrollers/bookController'
+} from '@bookservice/constrollers/bookController'
 import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 
 /**
@@ -12,10 +12,10 @@ import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 const bookRouter = () => {
   const router = Router()
 
-  router.post('/', asyncWrapper(postBooks))
-  router.get('/isbn/:ISBN', asyncWrapper(getBookByISBN))
-  router.get('/:ISBN', asyncWrapper(getBookByISBN))
-  router.put('/:ISBN', asyncWrapper(putBookByISBN))
+  router.post('/books', asyncWrapper(postBooks))
+  router.get('/books/isbn/:ISBN', asyncWrapper(getBookByISBN))
+  router.get('/books/:ISBN', asyncWrapper(getBookByISBN))
+  router.put('/books/:ISBN', asyncWrapper(putBookByISBN))
 
   return router
 }

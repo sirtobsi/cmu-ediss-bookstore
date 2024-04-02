@@ -9,9 +9,9 @@ import {
   createBook,
   findBookByISBN,
   updateBookByISBN,
-} from 'src/services/bookService'
-import { convertBookDaoToDto } from 'src/services/converters/bookConverterService'
-import { validateBookDto, validateISBN } from 'src/services/validators/bookValidatorService'
+} from '@bookservice/services/bookService'
+import { convertBookDaoToDto } from '@bookservice/services/converters/bookConverterService'
+import { validateBookDto, validateISBN } from '@bookservice/services/validators/bookValidatorService'
 
 /**
  * Add a new book.

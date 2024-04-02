@@ -12,7 +12,7 @@ import {
   convertCustomerDtoToDao,
   convertNewCustomerDtoToDao,
 } from './converters/customerConverterService'
-import { ApiError, ApiErrorCodes } from 'src/middleware/errorhandler/APIError'
+import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
 import { prisma } from 'src/server'
 
 /**

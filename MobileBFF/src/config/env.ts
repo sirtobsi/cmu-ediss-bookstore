@@ -4,7 +4,7 @@ import { load } from 'ts-dotenv'
  * Environment variables
  */
 export default load({
-  PORT: {
+  BFFPORT: {
     type: String,
     optional: false,
   },

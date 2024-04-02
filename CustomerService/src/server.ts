@@ -7,6 +7,6 @@ import { PrismaClient } from '@prisma/client'
 export const prisma = new PrismaClient()
 
 const server = http.createServer(app)
-server.listen(env.PORT, () => {
-  logger.info(`Server running on port ${env.PORT}.`)
+server.listen(env.SERVICEPORT, () => {
+  logger.info(`Server running on port ${env.SERVICEPORT}.`)
 })

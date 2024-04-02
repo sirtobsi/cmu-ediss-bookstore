@@ -6,13 +6,12 @@
   "author": "Tobias Schamel <tobias.schamel@tum.de>",
   "license": "MIT",
   "scripts": {
-    "prepare": "cd .. && husky install",
     "lint": "eslint .",
     "dev": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
-    "dev:bookservice": "yarn api:gen && nodemon --exec ts-node -r BookService/tsconfig-paths/register BookService/src/server.ts",
-    "dev:customerservice": "yarn api:gen && nodemon --exec ts-node -r CustomerService/tsconfig-paths/register CustomerService/src/server.ts",
-    "dev:webbff": "yarn api:gen && nodemon --exec ts-node -r WebBFF/tsconfig-paths/register src/server.ts",
-    "dev:mobilebff": "yarn api:gen && nodemon --exec ts-node -r MobileBFF/tsconfig-paths/register MobileBFF/src/server.ts",
+    "dev:bookservice": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register BookService/src/server.ts",
+    "dev:customerservice": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register CustomerService/src/server.ts",
+    "dev:webbff": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "dev:mobilebff": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register MobileBFF/src/server.ts",
     "build:bookservice": "yarn api:gen && prisma generate && run-s clean:bookservice compile:bookservice postBuild:bookservice",
     "build:customerservice": "yarn api:gen && prisma generate && run-s clean:customerservice compile:customerservice postBuild:customerservice",
     "build:webbff": "yarn api:gen && prisma generate && run-s clean:webbff compile:webbff postBuild:webbff",
@@ -23,6 +22,10 @@
     "postBuild:webbff": "ncp node_modules WebBFF/dist/node_modules",
     "postBuild:mobilebff": "ncp node_modules MobileBFF/dist/node_modules",
     "postBuild": "ncp node_modules dist/node_modules",
+    "start:bookservice": "yarn run build:bookservice && node -r tsconfig-paths/register BookService/dist/BookService/src/server.js",
+    "start:customerservice": "yarn run build:customerservice && node -r tsconfig-paths/register CustomerService/dist/CustomerService/src/server.js",
+    "start:webbff": "yarn run build:webbff && node -r tsconfig-paths/register WebBFF/dist/WebBFF/src/server.js",
+    "start:mobilebff": "yarn run build:mobilebff && node -r tsconfig-paths/register MobileBFF/dist/MobileBFF/src/server.js",
     "start": "yarn run build && node -r tsconfig-paths/register dist/src/server.js",
     "clean:bookservice": "rimraf BookService/dist",
     "clean:customerservice": "rimraf CustomerService/dist",
@@ -78,7 +81,7 @@
     "npm-run-all": "^4.1.5",
     "openapi-typescript-codegen": "^0.24.0",
     "prettier": "^2.8.8",
-    "rimraf": "^5.0.0",
+    "rimraf": "^5.0.5",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
@@ -86,7 +89,11 @@
   },
   "nodemonConfig": {
     "watch": [
-      "src"
+      "src",
+      "BookService/src",
+      "CustomerService/src",
+      "WebBFF/src",
+      "MobileBFF/src"
     ]
   }
 }

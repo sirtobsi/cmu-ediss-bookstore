@@ -6,7 +6,7 @@ import { BookDto } from '@api/generated'
 import { BookDao } from '@prisma/client'
 import { convertBookDtoToDao } from './converters/bookConverterService'
 import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
-import { prisma } from 'src/server'
+import { prisma } from '@bookservice/server'
 
 /**
  * Creates a new book after validating it.

@@ -7,9 +7,7 @@ import { customerProxy } from 'src/services/httpProxy/customerHttpProxy'
 const customerRouter = () => {
   const router = Router()
 
-  router.post('/', customerProxy)
-  router.get('/', customerProxy)
-  router.get('/:id', customerProxy)
+  router.use('/', customerProxy)
 
   return router
 }

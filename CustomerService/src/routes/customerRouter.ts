@@ -3,7 +3,7 @@ import {
   getCustomers,
   getCustomersById,
   postCustomers,
-} from 'src/constrollers/customerController'
+} from '../constrollers/customerController'
 import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 
 /**
@@ -12,9 +12,9 @@ import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 const customerRouter = () => {
   const router = Router()
 
-  router.post('/', asyncWrapper(postCustomers))
-  router.get('/', asyncWrapper(getCustomers))
-  router.get('/:id', asyncWrapper(getCustomersById))
+  router.post('/customers', asyncWrapper(postCustomers))
+  router.get('/customers', asyncWrapper(getCustomers))
+  router.get('/customers/:id', asyncWrapper(getCustomersById))
 
   return router
 }

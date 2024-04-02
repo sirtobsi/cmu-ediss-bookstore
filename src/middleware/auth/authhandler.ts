@@ -35,6 +35,7 @@ export const authHandler = (
         checkValidISS(decoded.iss)
         checkTokenExpiration(decoded.exp)
         next()
+        return
       }
     } catch (error) {
       throw new ApiError(ApiErrorCodes.UNAUTHORIZED, 'Invalid token')

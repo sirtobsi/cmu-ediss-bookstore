@@ -7,7 +7,7 @@ servers:
   - url: "{baseURL}" # for local testing
     variables:
       baseURL:
-        default: "http://localhost:8080"
+        default: "http://localhost:80"
         description: Base URL of the server
     description: Local server
 tags:
@@ -320,6 +320,12 @@ components:
         - genre
         - price
         - quantity
-        
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+security:
+  - bearerAuth: [] 
 
 

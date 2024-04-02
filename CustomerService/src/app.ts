@@ -9,7 +9,7 @@ import { HelloWorldResponseDto } from '@api/generated'
 
 const app = express()
 
-const swaggerDocument = YAML.load('../api/src/api.yaml')
+const swaggerDocument = YAML.load('./api/src/api.yaml')
 app.use('/api-spec', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use(express.json())
@@ -23,7 +23,7 @@ app.get('/', (req: Request, res: Response) => {
   res.status(200).json({ msg: 'Hello World!' } as HelloWorldResponseDto)
 })
 
-app.use('/customers', [customerRouter()])
+app.use('/', [customerRouter()])
 
 app.use(errorHandler)
 

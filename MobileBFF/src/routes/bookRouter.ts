@@ -7,10 +7,7 @@ import { bookProxy } from 'src/services/httpProxy/bookHttpProxy'
 const bookRouter = () => {
   const router = Router()
 
-  router.post('/', bookProxy)
-  router.get('/isbn/:ISBN', bookProxy)
-  router.get('/:ISBN', bookProxy)
-  router.put('/:ISBN', bookProxy)
+  router.use('/books', bookProxy)
 
   return router
 }
