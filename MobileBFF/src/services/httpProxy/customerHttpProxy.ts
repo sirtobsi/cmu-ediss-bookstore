@@ -1,5 +1,5 @@
 import proxy from 'express-http-proxy'
-import env from '../../config/env'
+import env from '@mobilebff/config/env'
 
 /**
  * This is a proxy that forwards requests to the Customer Service.

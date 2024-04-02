@@ -31,6 +31,9 @@
       "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
       "paths": {
         "@bookservice/*": ["./BookService/src/*"],
+        "@customerservice/*": ["./CustomerService/src/*"],
+        "@mobilebff/*": ["./MobileBFF/src/*"],
+        "@webbff/*": ["./WebBFF/src/*"],
         "src/*": ["./src/*"],
         "@api/*": ["./api/*"],
         "@prisma/*": ["./node_modules/.prisma/*"],

@@ -4,7 +4,7 @@ import YAML from 'yamljs'
 import cors from 'cors'
 import errorHandler from '@common/middleware/errorhandler/errorhandler'
 import { requestLogger } from '@common/middleware/logger/httplogger'
-import customerRouter from './routes/customerRouter'
+import customerRouter from '@customerservice/routes/customerRouter'
 import { HelloWorldResponseDto } from '@api/generated'
 
 const app = express()

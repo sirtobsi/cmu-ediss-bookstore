@@ -1,5 +1,5 @@
 import proxy from 'express-http-proxy'
-import env from '../../config/env'
+import env from '@webbff/config/env'
 import { CustomerDto, CustomerWebBFFDto } from '@api/generated'
 import { convertCustomer } from '../converters/customerConverterService'
 

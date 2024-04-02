@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { bookProxy } from 'src/services/httpProxy/bookHttpProxy'
+import { bookProxy } from '@mobilebff/services/httpProxy/bookHttpProxy'
 
 /**
  * The router for the book resource.

@@ -1,10 +1,10 @@
 import { Router } from 'express'
+import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
 import {
   getCustomers,
   getCustomersById,
   postCustomers,
-} from '../constrollers/customerController'
-import asyncWrapper from '@common/middleware/errorhandler/asyncWrapper'
+} from '@customerservice/constrollers/customerController'
 
 /**
  * The router for the customer resource.

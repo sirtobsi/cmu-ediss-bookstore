@@ -10,7 +10,7 @@
     "dev": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
     "dev:bookservice": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register BookService/src/server.ts",
     "dev:customerservice": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register CustomerService/src/server.ts",
-    "dev:webbff": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "dev:webbff": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register WebBFF/src/server.ts",
     "dev:mobilebff": "yarn api:gen && nodemon --exec ts-node -r tsconfig-paths/register MobileBFF/src/server.ts",
     "build:bookservice": "yarn api:gen && prisma generate && run-s clean:bookservice compile:bookservice postBuild:bookservice",
     "build:customerservice": "yarn api:gen && prisma generate && run-s clean:customerservice compile:customerservice postBuild:customerservice",

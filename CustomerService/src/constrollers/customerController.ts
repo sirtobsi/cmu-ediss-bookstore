@@ -3,16 +3,11 @@
  */
 
 import { CustomerDto, NewCustomerDto } from '@api/generated'
+import { convertCustomerDaoToDto } from '@customerservice/services/converters/customerConverterService'
+import { createCustomer, findCustomerById, findCustomerByUserId } from '@customerservice/services/customerService'
+import { validateCustomerId, validateNewCustomerDto, validateUserId } from '@customerservice/services/validators/customerValidatorService'
 import { CustomerDao } from '@prisma/client'
 import { Request, Response } from 'express'
-import {
-  createCustomer,
-  findCustomerById,
-  findCustomerByUserId,
-} from 'src/services/customerService'
-import { convertCustomerDaoToDto } from 'src/services/converters/customerConverterService'
-import { validateCustomerId, validateNewCustomerDto, validateUserId } from 'src/services/validators/customerValidatorService'
-
 /**
  * Add a new customer.
  * @param {Request<any, any, NewCustomerDto>} req the incoming request including the customer to add.

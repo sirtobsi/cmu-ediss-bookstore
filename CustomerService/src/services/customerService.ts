@@ -13,7 +13,7 @@ import {
   convertNewCustomerDtoToDao,
 } from './converters/customerConverterService'
 import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
-import { prisma } from 'src/server'
+import { prisma } from '@customerservice/server'
 
 /**
  * Creates a new customer.
