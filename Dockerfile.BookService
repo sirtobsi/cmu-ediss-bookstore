@@ -1,0 +1,20 @@
+FROM node:21-alpine3.18
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+COPY package.json /app
+RUN yarn install
+
+COPY tsconfig.json /app
+COPY api /app/api
+COPY prisma /app/prisma
+COPY src /app/src
+COPY BookService /app/BookService
+
+RUN yarn run build:bookservice
+
+EXPOSE 3000
+
+CMD ["node", "-r", "tsconfig-paths/register", "BookService/dist/BookService/src/server.js"]
