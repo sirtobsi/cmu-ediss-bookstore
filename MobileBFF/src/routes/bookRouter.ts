@@ -7,8 +7,8 @@ import { bookGETProxy, bookProxy } from '@mobilebff/services/httpProxy/bookHttpP
 const bookRouter = () => {
   const router = Router()
 
-  router.get('/books', bookGETProxy)
   router.get('/books/isbn/:isbn', bookGETProxy)
+  router.get('/books/:isbn', bookGETProxy)
   router.use('/books', bookProxy)
 
   return router

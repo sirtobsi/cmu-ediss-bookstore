@@ -6,6 +6,6 @@ import env from '@webbff/config/env'
  */
 export const bookProxy = proxy(env.BASEURL!, {
     proxyReqPathResolver: function (req) {
-        return '/books' + req.url
+        return req.originalUrl
       },
 })

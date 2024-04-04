@@ -6,6 +6,6 @@ import env from '@webbff/config/env'
  */
 export const customerProxy = proxy(env.BASEURL!, {
   proxyReqPathResolver: function (req) {
-    return '/customers' + req.url
+    return req.originalUrl
   },
 })

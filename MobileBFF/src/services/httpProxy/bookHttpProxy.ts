@@ -18,7 +18,7 @@ export const bookGETProxy = proxy(env.BASEURL!, {
     }
   },
   proxyReqPathResolver: function (req) {
-    return '/books' + req.url
+    return req.originalUrl
   },
 })
 
@@ -27,6 +27,6 @@ export const bookGETProxy = proxy(env.BASEURL!, {
  */
 export const bookProxy = proxy(env.BASEURL!, {
   proxyReqPathResolver: function (req) {
-      return '/books' + req.url
+      return req.originalUrl
     },
 })

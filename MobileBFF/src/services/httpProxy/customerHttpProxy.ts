@@ -20,7 +20,7 @@ export const customerGETProxy = proxy(env.BASEURL!, {
     }
   },
   proxyReqPathResolver: function (req) {
-    return '/customers' + req.url
+    return req.originalUrl
   },
 })
 
@@ -29,6 +29,6 @@ export const customerGETProxy = proxy(env.BASEURL!, {
  */
 export const customerProxy = proxy(env.BASEURL!, {
   proxyReqPathResolver: function (req) {
-    return '/customers' + req.url
+    return req.originalUrl
   },
 })
