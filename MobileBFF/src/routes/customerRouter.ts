@@ -7,8 +7,9 @@ import { customerGETProxy, customerProxy } from '@mobilebff/services/httpProxy/c
 const customerRouter = () => {
   const router = Router()
 
-  router.get('/', customerGETProxy)
-  router.use('/', customerProxy)
+  router.get('/customers', customerGETProxy)
+  router.get('/customers/:id', customerGETProxy)
+  router.use('/customers', customerProxy)
 
   return router
 }
