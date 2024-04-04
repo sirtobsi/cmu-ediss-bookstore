@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { bookProxy } from '@mobilebff/services/httpProxy/bookHttpProxy'
+import { bookGETProxy, bookProxy } from '@mobilebff/services/httpProxy/bookHttpProxy'
 
 /**
  * The router for the book resource.
@@ -7,7 +7,8 @@ import { bookProxy } from '@mobilebff/services/httpProxy/bookHttpProxy'
 const bookRouter = () => {
   const router = Router()
 
-  router.use('/books', bookProxy)
+  router.get('/', bookGETProxy)
+  router.use('/', bookProxy)
 
   return router
 }

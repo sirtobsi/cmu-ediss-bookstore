@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { customerProxy } from '@mobilebff/services/httpProxy/customerHttpProxy'
+import { customerGETProxy, customerProxy } from '@mobilebff/services/httpProxy/customerHttpProxy'
 
 /**
  * The router for the customer resource.
@@ -7,6 +7,7 @@ import { customerProxy } from '@mobilebff/services/httpProxy/customerHttpProxy'
 const customerRouter = () => {
   const router = Router()
 
+  router.get('/', customerGETProxy)
   router.use('/', customerProxy)
 
   return router
