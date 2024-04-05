@@ -22,4 +22,17 @@ export class DefaultService {
         });
     }
 
+    /**
+     * Get status
+     * Get status
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static getStatus(): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/status',
+        });
+    }
+
 }

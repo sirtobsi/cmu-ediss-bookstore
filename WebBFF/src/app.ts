@@ -21,9 +21,13 @@ app.use(cors())
 
 app.use(requestLogger)
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (_: Request, res: Response) => {
   res.status(200).json({ msg: 'Hello World!' } as HelloWorldResponseDto)
 })
+
+app.get('/status', (_, res: Response) => {
+  res.type('text/plain').status(200).send('OK');
+});
 
 app.use('/', [authHandler, bookRouter()])
 
