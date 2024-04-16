@@ -2,16 +2,19 @@
  * Book controller handling the book routes.
  */
 
-import { BookDto } from '@api/generated'
+import { BookDto, RelatedBookDto } from '@api/generated'
 import { BookDao } from '@prisma/client'
 import { Request, Response } from 'express'
 import {
   createBook,
   findBookByISBN,
+  recommenderServiceCircuitBreaker,
   updateBookByISBN,
 } from '@bookservice/services/bookService'
 import { convertBookDaoToDto } from '@bookservice/services/converters/bookConverterService'
 import { validateBookDto, validateISBN } from '@bookservice/services/validators/bookValidatorService'
+import CircuitBreaker from 'opossum';
+import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
 
 /**
  * Add a new book.
@@ -63,4 +66,18 @@ export const putBookByISBN = async (
   const bookDto: BookDto = convertBookDaoToDto(updatedBook)
 
   res.status(200).json(bookDto)
+}
+
+export const getBookByISBNRelatedBooks = async (
+  req: Request<{ ISBN: string }>,
+  res: Response<RelatedBookDto[]>,
+) => {
+  const ISBN = validateISBN(req.params.ISBN)
+
+  const recommendedBooks: RelatedBookDto[] = await recommenderServiceCircuitBreaker.fire(ISBN);
+
+  if (!recommendedBooks) {
+    res.status(204).send()
+  }
+  res.status(200).json(recommendedBooks)
 }

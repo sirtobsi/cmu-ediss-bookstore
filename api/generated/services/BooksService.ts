@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BookDto } from '../models/BookDto';
+import type { RelatedBookDto } from '../models/RelatedBookDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -76,6 +77,29 @@ export class BooksService {
             errors: {
                 400: `Illegal, missing, or malformed input`,
                 404: `ISBN not found`,
+            },
+        });
+    }
+
+    /**
+     * Get related books by ISBN
+     * Get related books by ISBN
+     * @param isbn ISBN of the book to get related books
+     * @returns RelatedBookDto OK
+     * @throws ApiError
+     */
+    public static getBooksRelatedBooks(
+        isbn: string,
+    ): CancelablePromise<Array<RelatedBookDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/books/{ISBN}/related-books',
+            path: {
+                'ISBN': isbn,
+            },
+            errors: {
+                503: `Service unavailable`,
+                504: `Gateway timeout`,
             },
         });
     }

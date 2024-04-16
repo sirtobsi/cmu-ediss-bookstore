@@ -9,6 +9,7 @@ const bookRouter = () => {
 
   router.get('/books/isbn/:isbn', bookGETProxy)
   router.get('/books/:isbn', bookGETProxy)
+  router.get('/books/:isbn/related-books', bookProxy)
   router.use('/books', bookProxy)
 
   return router

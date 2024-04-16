@@ -2,11 +2,12 @@
  * The book service provides methods to create, retrieve and update books.
  */
 
-import { BookDto } from '@api/generated'
+import { BookDto, RelatedBookDto } from '@api/generated'
 import { BookDao } from '@prisma/client'
 import { convertBookDtoToDao } from './converters/bookConverterService'
 import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
 import { prisma } from '@bookservice/server'
+import CircuitBreaker from 'opossum'
 
 /**
  * Creates a new book after validating it.
@@ -72,3 +73,36 @@ export const updateBookByISBN = async (
     )
   }
 }
+
+/**
+ * Configuration for the circuit breaker as required.
+ */
+const circuitBreakerOptions: CircuitBreaker.Options = {
+  timeout: 3000, // 3 seconds
+  maxFailures: 0,
+  resetTimeout: 60000, // 60 seconds
+};
+
+/**
+ * The URL of the recommender service.
+ */
+const recommenderServiceURL: string = 'http://52.72.198.36/recommended-titles/isbn/';
+
+/**
+ * The circuit breaker for the recommender service.
+ */
+export const recommenderServiceCircuitBreaker = new CircuitBreaker(async (isbn: string): Promise<RelatedBookDto[]> => {
+  // Make the request to GET /helloWorld
+  const response = await fetch(`${recommenderServiceURL}${isbn}`);
+  return response.json();
+}, circuitBreakerOptions);
+
+// On timeout, it throws a GATEWAY_TIMEOUT error.
+recommenderServiceCircuitBreaker.on('timeout', () => {
+  throw new ApiError(ApiErrorCodes.GATEWAY_TIMEOUT, 'Request timed out');
+});
+
+// On failure, it throws a SERVICE_UNAVAILABLE error (this event is also triggered after failing from half-open).
+recommenderServiceCircuitBreaker.on('failure', () => {
+  throw new ApiError(ApiErrorCodes.SERVICE_UNAVAILABLE, 'Service unavailable');
+});

@@ -10,6 +10,8 @@ export enum ApiErrorCodes {
     BUSINESS_LOGIC_ERROR = 422,
     I_AM_A_TEAPOT = 418,
     INTERNAL_SERVER_ERROR = 500,
+    SERVICE_UNAVAILABLE = 503,
+    GATEWAY_TIMEOUT = 504,
 }
   
   /**
