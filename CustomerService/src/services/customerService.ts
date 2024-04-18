@@ -9,11 +9,14 @@ import {
   validateNewCustomerDto,
 } from './validators/customerValidatorService'
 import {
+  convertCustomerDaoToDto,
   convertCustomerDtoToDao,
   convertNewCustomerDtoToDao,
 } from './converters/customerConverterService'
 import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
 import { prisma } from '@customerservice/server'
+import { Kafka } from 'kafkajs'
+import logger from '@common/middleware/logger/logger'
 
 /**
  * Creates a new customer.
@@ -38,9 +41,9 @@ export const createCustomer = async (
         zipcode: newCustomer.zipcode,
       },
     })
+    await publishCustomerCreationToKafka(convertCustomerDaoToDto(createdCustomer))
     return createdCustomer
   } catch (error) {
-    // This is a clear antipattern as it allows for for checking which accounts exist in the system.
     throw new ApiError(
       ApiErrorCodes.BUSINESS_LOGIC_ERROR,
       `This user ID already exists in the system.`,
@@ -117,4 +120,33 @@ export const findCustomerByUserId = async (
     )
   }
   return retrievedCustomer
+}
+
+const kafka = new Kafka({
+  clientId: 'bookstore',
+  brokers: ['52.72.198.36:9092', '54.224.217.168:9092', '44.208.221.62:9092'],
+})
+
+/**
+ * Publishes a new customer to Kafka message queue to be consumed by email service.
+ * @param {CustomerDto} newCustomer the new customer to publish to Kafka
+ * @returns 
+ */
+const publishCustomerCreationToKafka = async (
+  newCustomer: CustomerDto,
+): Promise<void> => {
+  const producer = kafka.producer()
+  try {
+    await producer.connect()
+    await producer.send({
+      topic: 'tschamel.customer.evt',
+      messages: [
+        { value: JSON.stringify(newCustomer) }
+      ],
+    })
+  } catch (error) {
+    logger.error(`Failed to publish customer creation event to Kafka: ${error}`)
+  } finally {
+    await producer.disconnect()
+  }
 }
