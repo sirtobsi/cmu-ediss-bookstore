@@ -34,7 +34,7 @@
         "@customerservice/*": ["./CustomerService/src/*"],
         "@mobilebff/*": ["./MobileBFF/src/*"],
         "@webbff/*": ["./WebBFF/src/*"],
-        "@emailservice/*": ["./EmailService/src/*"],
+        "@crm/*": ["./CRM/src/*"],
         "src/*": ["./src/*"],
         "@api/*": ["./api/*"],
         "@prisma/*": ["./node_modules/.prisma/*"],

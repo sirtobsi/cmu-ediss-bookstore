@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import env from './../config/env'
+import env from '../config/env'
 import logger from '@common/middleware/logger/logger'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
 

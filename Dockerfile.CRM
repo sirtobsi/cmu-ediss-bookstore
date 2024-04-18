@@ -11,10 +11,10 @@ COPY tsconfig.json /app
 COPY api /app/api
 COPY prisma /app/prisma
 COPY src /app/src
-COPY EmailService /app/EmailService
+COPY CRM /app/CRM
 
-RUN yarn run build:emailservice
+RUN yarn run build:crm
 
 EXPOSE 3000
 
-CMD ["node", "-r", "tsconfig-paths/register", "EmailService/dist/EmailService/src/server.js"]
+CMD ["node", "-r", "tsconfig-paths/register", "CRM/dist/CRM/src/server.js"]
