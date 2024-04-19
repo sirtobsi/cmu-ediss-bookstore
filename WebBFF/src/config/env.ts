@@ -8,7 +8,11 @@ export default load({
     type: String,
     optional: false,
   },
-  BASEURL: {
+  BASEURL_CUSTOMER: {
+    type: String,
+    optional: false,
+  },
+  BASEURL_BOOK: {
     type: String,
     optional: false,
   },

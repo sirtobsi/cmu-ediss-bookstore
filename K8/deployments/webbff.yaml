@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webbff-deployment
+  namespace: bookstore-ns
+  labels:
+    app: webbff
+    type: bff
+spec:
+  template:
+    metadata:
+      name: webbff-pod
+      labels:
+        app: webbff
+        type: bff
+    spec:
+      containers:
+      - name: webbff
+        image: sirtobsi/cmu-ediss-bookstore-webbff:latest
+        ports:
+          - containerPort: 80
+        env:
+          - name: SERVICEPORT
+            value: '3000'
+          - name: BFFPORT
+            value: '80'
+          - name: BASEURL_CUSTOMER
+            value: TODO_CUSTOMER
+          - name: BASEURL_BOOK
+            value: TODO_BOOK
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: 'app'
+              operator: In
+              values:
+              - webbff
+  selector:
+    matchLabels:
+      app: webbff

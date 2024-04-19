@@ -7,9 +7,9 @@ import logger from '@common/middleware/logger/logger'
 /**
  * This is a proxy that forwards requests to the BookService and converts the result for GET requests.
  */
-export const bookGETProxy = proxy(env.BASEURL!, {
+export const bookGETProxy = proxy(env.BASEURL_BOOK!, {
   userResDecorator: function (proxyRes, proxyResData, userReq, userRes) {
-    logger.info(`Proxying request to ${env.BASEURL!}; status code ${proxyRes?.statusCode}`)
+    logger.info(`Proxying request to ${env.BASEURL_BOOK!}; status code ${proxyRes?.statusCode}`)
     if (proxyRes?.statusCode && proxyRes.statusCode < 400) {
       const mobileBffBook: BookMobileBFFDto = convertBook(JSON.parse(proxyResData.toString()))
       return JSON.stringify(mobileBffBook)
@@ -25,7 +25,7 @@ export const bookGETProxy = proxy(env.BASEURL!, {
 /**
  * This is a proxy that forwards requests to the BookService.
  */
-export const bookProxy = proxy(env.BASEURL!, {
+export const bookProxy = proxy(env.BASEURL_BOOK!, {
   proxyReqPathResolver: function (req) {
       return req.originalUrl
     },

@@ -7,9 +7,9 @@ import logger from '@common/middleware/logger/logger'
 /**
  * This is a proxy that forwards requests to the BookService and converts the result for GET requests.
  */
-export const customerGETProxy = proxy(env.BASEURL!, {
+export const customerGETProxy = proxy(env.BASEURL_CUSTOMER!, {
   userResDecorator: function (proxyRes, proxyResData, userReq, userRes) {
-    logger.info(`Proxying request to ${env.BASEURL!}; status code ${proxyRes?.statusCode}`)
+    logger.info(`Proxying request to ${env.BASEURL_CUSTOMER!}; status code ${proxyRes?.statusCode}`)
     if (proxyRes?.statusCode && proxyRes.statusCode < 400) {
       const webBffCustomer: CustomerWebBFFDto = convertCustomer(
         JSON.parse(proxyResData.toString()),
@@ -27,7 +27,7 @@ export const customerGETProxy = proxy(env.BASEURL!, {
 /**
  * This is a proxy that forwards requests to the BookService
  */
-export const customerProxy = proxy(env.BASEURL!, {
+export const customerProxy = proxy(env.BASEURL_CUSTOMER!, {
   proxyReqPathResolver: function (req) {
     return req.originalUrl
   },

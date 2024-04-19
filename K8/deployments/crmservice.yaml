@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crmservice-deployment
+  namespace: bookstore-ns
+  labels:
+    app: crmservice
+    type: service
+spec:
+  template:
+    metadata:
+      name: crmservice-pod
+      labels:
+        app: crmservice
+        type: service
+    spec:
+      containers:
+      - name: crmservice
+        image: sirtobsi/cmu-ediss-bookstore-crmservice:latest
+        ports:
+          - containerPort: 3000
+        env:
+          - name: GMAIL_APP_PASSWORD
+            value: gjqm sdpe qaom aqzc
+          - name: SERVICEPORT
+            value: '3000'
+          - name: BFFPORT
+            value: '80'
+          - name: BASEURL_CUSTOMER
+            value: TODO_CUSTOMER
+          - name: BASEURL_BOOK
+            value: TODO_BOOK
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: 'app'
+              operator: In
+              values:
+              - crmservice
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crmservice

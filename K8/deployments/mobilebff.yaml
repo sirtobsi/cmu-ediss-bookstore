@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mobilebff-deployment
+  namespace: bookstore-ns
+  labels:
+    app: mobilebff
+    type: bff
+spec:
+  template:
+    metadata:
+      name: mobilebff-pod
+      labels:
+        app: mobilebff
+        type: bff
+    spec:
+      containers:
+      - name: mobilebff
+        image: sirtobsi/cmu-ediss-bookstore-mobilebff:latest
+        ports:
+          - containerPort: 80
+        env:
+          - name: SERVICEPORT
+            value: '3000'
+          - name: BFFPORT
+            value: '80'
+          - name: BASEURL_CUSTOMER
+            value: TODO_CUSTOMER
+          - name: BASEURL_BOOK
+            value: TODO_BOOK
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: 'app'
+              operator: In
+              values:
+              - mobilebbf
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mobilebff

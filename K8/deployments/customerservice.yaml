@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customerservice-deployment
+  namespace: bookstore-ns
+  labels:
+    app: customerservice
+    type: service
+spec:
+  template:
+    metadata:
+      name: customerservice-pod
+      labels:
+        app: customerservice
+        type: service
+    spec:
+      containers:
+      - name: customerservice
+        image: sirtobsi/cmu-ediss-bookstore-customerservice:latest
+        ports:
+          - containerPort: 3000
+        env:
+          - name: DATABASE_URL
+            value: mysql://dbusername:dbpassword@a2-prio-dbclusteraurorabookstore-35rax2tfw9bo.cluster-c566kg286sz8.us-east-1.rds.amazonaws.com:3306/bookstore
+          - name: SERVICEPORT
+            value: '3000'
+          - name: BFFPORT
+            value: '80'
+          - name: BASEURL_CUSTOMER
+            value: TODO_CUSTOMER
+          - name: BASEURL_BOOK
+            value: TODO_BOOK
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+            - key: 'app'
+              operator: In
+              values:
+              - customerservice
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customerservice
