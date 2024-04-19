@@ -12,9 +12,14 @@ import {
   updateBookByISBN,
 } from '@bookservice/services/bookService'
 import { convertBookDaoToDto } from '@bookservice/services/converters/bookConverterService'
-import { validateBookDto, validateISBN } from '@bookservice/services/validators/bookValidatorService'
-import CircuitBreaker from 'opossum';
-import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIError'
+import {
+  validateBookDto,
+  validateISBN,
+} from '@bookservice/services/validators/bookValidatorService'
+import {
+  ApiError,
+  ApiErrorCodes,
+} from '@common/middleware/errorhandler/APIError'
 
 /**
  * Add a new book.
@@ -74,10 +79,34 @@ export const getBookByISBNRelatedBooks = async (
 ) => {
   const ISBN = validateISBN(req.params.ISBN)
 
-  const recommendedBooks: RelatedBookDto[] = await recommenderServiceCircuitBreaker.fire(ISBN);
+  const circuitBreakerWasHalfOpen: boolean =
+    recommenderServiceCircuitBreaker.toJSON().state.halfOpen
 
-  if (!recommendedBooks) {
-    res.status(204).send()
+  try {
+    const recommendedBooks: RelatedBookDto[] =
+      await recommenderServiceCircuitBreaker.fire(ISBN)
+
+    if (recommendedBooks.length === 0) {
+      res.status(204).send()
+      return
+    }
+    res.status(200).json(recommendedBooks)
+    return
+  } catch (error) {
+
+    // if the circuit breaker is open OR is half open and fails, return a 503
+    if ((error as any).code === 'EOPENBREAKER' || circuitBreakerWasHalfOpen) {
+      throw new ApiError(
+        ApiErrorCodes.SERVICE_UNAVAILABLE,
+        'Service unavailable',
+      )
+    }
+
+    // if circuit breaker was closed and failed, return a 504
+    if ((error as any).code === 'ETIMEDOUT') {
+      throw new ApiError(ApiErrorCodes.GATEWAY_TIMEOUT, 'Request timed out')
+    }
+
+    res.status(500).send()
   }
-  res.status(200).json(recommendedBooks)
 }

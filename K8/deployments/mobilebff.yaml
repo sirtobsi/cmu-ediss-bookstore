@@ -34,16 +34,6 @@ spec:
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 20
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - topologyKey: "kubernetes.io/hostname"
-          labelSelector:
-            matchExpressions:
-            - key: 'app'
-              operator: In
-              values:
-              - mobilebbf
   replicas: 2
   selector:
     matchLabels:

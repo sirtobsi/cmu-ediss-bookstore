@@ -36,16 +36,6 @@ spec:
             port: 3000
           initialDelaySeconds: 15
           periodSeconds: 20
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - topologyKey: "kubernetes.io/hostname"
-          labelSelector:
-            matchExpressions:
-            - key: 'app'
-              operator: In
-              values:
-              - customerservice
   replicas: 2
   selector:
     matchLabels:
