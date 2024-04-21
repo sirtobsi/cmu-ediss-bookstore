@@ -104,6 +104,7 @@ export const getBookByISBNRelatedBooks = async (
 
     // if circuit breaker was closed and failed, return a 504
     if ((error as any).code === 'ETIMEDOUT') {
+      recommenderServiceCircuitBreaker.open()
       throw new ApiError(ApiErrorCodes.GATEWAY_TIMEOUT, 'Request timed out')
     }
 

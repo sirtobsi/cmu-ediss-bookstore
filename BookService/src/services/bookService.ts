@@ -115,13 +115,3 @@ export const recommenderServiceCircuitBreaker = new CircuitBreaker(
   },
   circuitBreakerOptions,
 )
-
-// // On timeout, it throws a GATEWAY_TIMEOUT error.
-// recommenderServiceCircuitBreaker.on('timeout', () => {
-//   throw new ApiError(ApiErrorCodes.GATEWAY_TIMEOUT, 'Request timed out')
-// })
-
-// // On failure, it throws a SERVICE_UNAVAILABLE error (this event is also triggered after failing from half-open).
-// recommenderServiceCircuitBreaker.on('failure', () => {
-//   throw new ApiError(ApiErrorCodes.SERVICE_UNAVAILABLE, 'Service unavailable')
-// })
