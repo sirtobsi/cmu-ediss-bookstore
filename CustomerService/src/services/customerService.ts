@@ -6,7 +6,6 @@ import { CustomerDto, NewCustomerDto } from '@api/generated'
 import { CustomerDao } from '@prisma/client'
 import {
   validateCustomerDto,
-  validateNewCustomerDto,
 } from './validators/customerValidatorService'
 import {
   convertCustomerDaoToDto,
@@ -17,6 +16,7 @@ import { ApiError, ApiErrorCodes } from '@common/middleware/errorhandler/APIErro
 import { prisma } from '@customerservice/server'
 import { Kafka } from 'kafkajs'
 import logger from '@common/middleware/logger/logger'
+import env from '@customerservice/config/env'
 
 /**
  * Creates a new customer.
@@ -124,7 +124,7 @@ export const findCustomerByUserId = async (
 
 const kafka = new Kafka({
   clientId: 'bookstore',
-  brokers: ['52.72.198.36:9092', '54.224.217.168:9092', '44.208.221.62:9092'],
+  brokers: [env.KAFKA_BROKER || 'localhost:9092'],
 })
 
 /**

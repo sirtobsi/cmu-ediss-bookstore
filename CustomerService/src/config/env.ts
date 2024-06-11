@@ -8,4 +8,8 @@ export default load({
     type: String,
     optional: false,
   },
+  KAFKA_BROKER: {
+    type: String,
+    optional: false,
+  },
 })

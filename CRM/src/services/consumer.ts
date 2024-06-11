@@ -1,12 +1,13 @@
 import { CustomerDto } from '@api/generated'
 import logger from '@common/middleware/logger/logger'
+import env from '../config/env'
 import { Kafka, EachMessagePayload, Consumer } from 'kafkajs'
 import { sendEmail } from './emailService'
 
 // Define the Kafka consumer configuration
 const kafka = new Kafka({
   clientId: 'bookstore',
-  brokers: ['52.72.198.36:9092', '54.224.217.168:9092', '44.208.221.62:9092'],
+  brokers: [env.KAFKA_BROKER || 'localhost:9092'],
 })
 
 const consumer: Consumer = kafka.consumer({ groupId: 'bookstore-group' })
